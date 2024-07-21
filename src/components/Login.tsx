@@ -6,7 +6,7 @@ import { loginRequest } from '../services/api';
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState<{ email?: string[]; password?: string[] }>({});
+    const [errors, setErrors] = useState<{ email?: string[]; password?: string[]; form?: string }>({});
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -26,6 +26,7 @@ const Login: React.FC = () => {
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-6">Login</h1>
             <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 rounded shadow">
+                {errors?.form && <p className="text-red-500">{errors.form}</p>}
                 <div className="mb-4">
                     <label className="block text-gray-700">Email</label>
                     <input

@@ -22,11 +22,19 @@ export const loginRequest = async (email: string, password: string) => {
         });
         return response.data;
     } catch (error: any) {
-        if (error.response && error.response.data && error.response.data.errors) {
-            throw error.response.data.errors;
+        if (error?.response?.data) {
+            throw error.response.data?.errors ? error.response.data.errors : {form: error.response.data.error};
         } else {
-            console.error('Login failed', error);
             throw new Error('An unexpected error occurred');
         }
     }
+};
+
+export const getUserOrders = async (token: string) => {
+    const response = await api.get('/user/orders', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data.data;
 };

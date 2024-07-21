@@ -28,6 +28,9 @@ const Navbar: React.FC = () => {
                     <Link to="/cart" className="ml-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         Cart
                     </Link>
+                    <Link to="/orders" className="ml-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                        My Orders
+                    </Link>
                 </div>
             </div>
         </header>
