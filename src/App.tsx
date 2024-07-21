@@ -4,17 +4,20 @@ import Login from "./components/Login";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 
 const App: React.FC = () => {
     return (
         <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/" element={<ProductList />} />
-                    <Route path="/products/:id" element={<ProductDetails />} />
-                </Routes>
-            </Router>
+            <CartProvider>
+                <Router>
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<ProductList />} />
+                        <Route path="/products/:id" element={<ProductDetails />} />
+                    </Routes>
+                </Router>
+            </CartProvider>
         </AuthProvider>
     );
 };
