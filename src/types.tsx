@@ -11,3 +11,11 @@ export interface AuthContextProps {
     login: (token: string, user: User) => void;
     logout: () => void;
 }
+
+export interface Product {
+    id: number;
+    name: string;
+    price: string;
+    image: string;
+    supplier: string;
+}
