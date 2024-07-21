@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import {useCart} from "../context/CartContext";
 
 const Navbar: React.FC = () => {
     const { isAuthenticated, user, logout } = useAuth();
+    const { cartCount } = useCart();
 
     return (
         <header className="bg-blue-600 text-white p-4 shadow-md fixed w-full z-10">
@@ -26,7 +28,7 @@ const Navbar: React.FC = () => {
                         </Link>
                     )}
                     <Link to="/cart" className="ml-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                        Cart
+                        Cart ({cartCount})
                     </Link>
                     <Link to="/orders" className="ml-4 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         My Orders

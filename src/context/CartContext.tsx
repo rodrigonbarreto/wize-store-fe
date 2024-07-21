@@ -35,12 +35,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         });
     };
 
+    const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, updateCartItem, removeFromCart, setCart }}>
+        <CartContext.Provider value={{ cart, addToCart, updateCartItem, removeFromCart, setCart, cartCount }}>
             {children}
         </CartContext.Provider>
     );

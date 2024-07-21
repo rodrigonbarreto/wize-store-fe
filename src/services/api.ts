@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api/v1', // update to ENV file
+    baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
 export const getProducts = async () => {
@@ -37,4 +37,17 @@ export const getUserOrders = async (token: string) => {
         },
     });
     return response.data.data;
+};
+
+export const checkout = async (products: { product_id: number; quantity: number }[], token: string) => {
+    const response = await api.post(
+        '/cart/checkout',
+        { products },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+    return response.data;
 };

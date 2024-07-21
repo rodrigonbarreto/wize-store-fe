@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import {useAuth} from '../context/AuthContext';
 import {getUserOrders} from '../services/api';
 import {Order} from "../types";
@@ -6,7 +7,9 @@ import {Order} from "../types";
 const Orders: React.FC = () => {
     const { user } = useAuth();
     const [orders, setOrders] = useState<Order[]>([]);
-    const [message, setMessage] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -17,11 +20,10 @@ const Orders: React.FC = () => {
                         const data = await getUserOrders(token);
                         setOrders(data);
                     } else {
-                        setMessage('Authentication token is missing.');
+                        setErrorMessage('Authentication token is missing.');
                     }
                 } catch (error) {
-                    console.error('Failed to fetch orders', error);
-                    setMessage('Failed to fetch orders. Please try again.');
+                    setErrorMessage('Failed to fetch orders. Please try again.');
                 }
             }
         };
@@ -29,10 +31,18 @@ const Orders: React.FC = () => {
         fetchOrders();
     }, [user]);
 
+    useEffect(() => {
+        if(location?.state?.message) {
+            setSuccessMessage(location.state.message);
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-6">My Orders</h1>
-            {message && <p className="text-red-500 mb-4">{message}</p>}
+            {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+            {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
             <ul>
                 {orders.map((order) => (
                     <li key={order.id} className="mb-4">
