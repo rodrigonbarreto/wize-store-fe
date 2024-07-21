@@ -9,16 +9,13 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return savedCart ? JSON.parse(savedCart) : [];
     });
 
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
-
     const addToCart = (product: CartItem) => {
         setCart((prevCart) => [...prevCart, product]);
     };
 
     const updateCartItem = (updatedProduct: CartItem) => {
-        setCart((prevCart) => {
+        setCart((prevState) => {
+            const prevCart = [...prevState];
             const itemInCartIndex = prevCart.findIndex((item) => item.product_id === updatedProduct.product_id);
 
             prevCart.splice(itemInCartIndex, 1, {...prevCart[itemInCartIndex], ...updatedProduct})
@@ -28,7 +25,8 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const removeFromCart = (product_id: number) => {
-        setCart((prevCart) => {
+        setCart((prevState) => {
+            const prevCart = [...prevState];
             const itemInCartIndex = prevCart.findIndex((item) => item.product_id === product_id);
 
             prevCart.splice(itemInCartIndex, 1)
@@ -37,7 +35,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         });
     };
 
-
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
 
     return (
         <CartContext.Provider value={{ cart, addToCart, updateCartItem, removeFromCart, setCart }}>
