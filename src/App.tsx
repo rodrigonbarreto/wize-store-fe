@@ -1,13 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from "./components/Login";
+import { AuthProvider } from './context/AuthContext';
 
-function App() {
-  return (
-    <>
-      <h1>Hello</h1>
-    </>
-  );
-}
+const App: React.FC = () => {
+    return (
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                </Routes>
+            </Router>
+        </AuthProvider>
+    );
+};
 
 export default App;
