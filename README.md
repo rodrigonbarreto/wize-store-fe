@@ -31,6 +31,9 @@ npm install
 npm start
 ```
 
+### Test user example(shopper)
+    * email: user@shopper.com
+    * password: 123123
 
 ## User Features
     * Login: Users can log in.
